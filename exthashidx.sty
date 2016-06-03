@@ -25,12 +25,14 @@
 % ------------------------------------------------------------------------------
 
 % global style declarations
-\tikzstyle{ehiptr} = [draw, semithick, fill=white, minimum height=2em, minimum width=4em]
-\tikzstyle{ehival} = [draw, semithick, fill=white, minimum size=2em, font=\ttfamily]
+\tikzstyle{ehidirectory} = [ampersand replacement=\&, row sep=-0.6pt, column sep=-0.6pt, matrix anchor=east, column 2/.style={anchor=base west}]
+\tikzstyle{ehibucket} = [ampersand replacement=\&, row sep=-0.6pt, column sep=-0.6pt, matrix anchor=west]
 \tikzstyle{ehidepth} = [draw, semithick, fill=gray!40, minimum size=2em, font=\sffamily\bfseries]
-\tikzstyle{ehilink} = [draw, semithick, ->, >=triangle 45, shorten >=.5em]
-\tikzstyle{ehilabel} = [minimum height=2em, font=\sffamily\bfseries, inner sep=0]
+\tikzstyle{ehiptr} = [draw, semithick, minimum height=2em, minimum width=4em]
+\tikzstyle{ehival} = [draw, semithick, minimum size=2em, font=\ttfamily]
 \tikzstyle{ehibin} = [minimum height=2em, font=\ttfamily]
+\tikzstyle{ehilabel} = [minimum height=2em, font=\sffamily\bfseries, inner sep=0]
+\tikzstyle{ehilink} = [draw, semithick, ->, >=triangle 45, shorten >=.5em]
 
 % helper macros (almost verbatim from weiwBTree.sty)
 \newcommand{\ehisuppressemptystr}[1]{% leave blank for entries in leaf nodes
@@ -62,7 +64,7 @@
 
 % directory with capacity = 4
 \newcommand{\exthashidxdirectoryfour}[2]{%
-  \matrix [ampersand replacement=\&, matrix anchor=east, column 2/.style={anchor=base west}] (#1)
+  \matrix[ehidirectory] (#1)
   {
     \& \node[ehidepth] (#1-depth) {#2}; \\
     \node[ehibin] {00 \hspace*{1em}}; \& \node[ehiptr] (#1-00) {\relax}; \\
@@ -75,7 +77,7 @@
 
 % directory with capacity = 8
 \newcommand{\exthashidxdirectoryeight}[2]{%
-  \matrix [ampersand replacement=\&, matrix anchor=east, column 2/.style={anchor=base west}] (#1)
+  \matrix[ehidirectory] (#1)
   {
     \& \node[ehidepth] (#1-depth) {#2}; \\
     \node[ehibin] {000 \hspace*{1em}}; \& \node[ehiptr] (#1-000) {\relax}; \\
@@ -92,7 +94,7 @@
 
 % bucket with capacity = 4
 \newcommand{\exthashidxbucketfour}[6]{%
-  \matrix [ampersand replacement=\&, matrix anchor=west] (#1)
+  \matrix[ehibucket] (#1)
   {
   	\node[ehidepth] (#1-depth) {#2}; \\
     \node[ehival] (#1-a) {\ehisuppressemptystr{#3}}; \&
