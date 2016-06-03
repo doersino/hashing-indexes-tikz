@@ -1,0 +1,34 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage{exthashidx}
+
+\begin{document}
+
+\begin{figure}[!ht]
+    \begin{center}
+        \scalebox{0.8}{
+            \begin{tikzpicture}
+                % directory
+                \xyshift{+00mm}{+00mm}{\exthashidxdirectoryeight{directory}{3}}
+                % buckets
+                \xyshift{+20mm}{+60mm}{\exthashidxbucketfour{A}{3}{}{}{64}{16}}
+                \xyshift{+20mm}{+30mm}{\exthashidxbucketfour{B}{2}{1}{5}{21}{}}
+                \xyshift{+20mm}{+00mm}{\exthashidxbucketfour{C}{2}{10}{}{}{}}
+                \xyshift{+20mm}{-30mm}{\exthashidxbucketfour{D}{2}{15}{7}{51}{}}
+                \xyshift{+20mm}{-60mm}{\exthashidxbucketfour{A2}{3}{4}{12}{20}{36}{29}}
+                % links
+                \exthashidxlink{directory-000}{A}
+                \exthashidxlink{directory-001}{B}
+                \exthashidxlink{directory-010}{C}
+                \exthashidxlink{directory-011}{D}
+                \exthashidxlink{directory-100}{A2}
+                \exthashidxlink{directory-101}{B}
+                \exthashidxlink{directory-110}{C}
+                \exthashidxlink{directory-111}{D}
+            \end{tikzpicture}
+        }
+    \end{center}
+    \caption{\textit{Extendible Hashing} Index}
+\end{figure}
+
+\end{document}
