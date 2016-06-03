@@ -1,10 +1,21 @@
-% Simple package for drawing Extendible Hashing Indexes using TikZ.
+% Simple package for drawing Extendible Hashing Indexes using TikZ. See
+% https://github.com/doersino/hashing-indexes-tikz for updates and a comparable
+% package for Linear Hashing Indexes.
 % Layout based on visualizations used in slide set "Hash-Based Indexing" from
 % http://db.inf.uni-tuebingen.de/teaching/DatenbanksystemeIISS2016.html.
 % Based on weiwBTree.sty from http://www.cse.unsw.edu.au/~weiw/tools.html.
 
+
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{exthashidx}
+
+\newif\if@recordpointers\@recordpointersfalse
+\DeclareOption{recordpointers}{
+  \@recordpointerstrue
+}
+
+\ExecuteOptions{}
+\ProcessOptions\relax
 
 \RequirePackage{tikz}
 \RequirePackage{ifthen}
@@ -29,7 +40,10 @@
   }%
   % Else
   {%
-    #1%\textsuperscript{*}%
+    #1%
+    \if@recordpointers
+      \textsuperscript{*}
+    \fi
   }%
 }%
 
