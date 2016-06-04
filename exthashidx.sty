@@ -9,9 +9,9 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{exthashidx}
 
-\newif\if@recordpointers\@recordpointersfalse
-\DeclareOption{recordpointers}{
-  \@recordpointerstrue
+\newif\if@ehirecordpointers\@ehirecordpointersfalse
+\DeclareOption{ehirecordpointers}{
+  \@ehirecordpointerstrue
 }
 
 \ExecuteOptions{}
@@ -26,13 +26,15 @@
 
 % global style declarations
 \tikzstyle{ehidirectory} = [ampersand replacement=\&, row sep=-0.6pt, column sep=-0.6pt, matrix anchor=east, column 2/.style={anchor=base west}]
-\tikzstyle{ehibucket} = [ampersand replacement=\&, row sep=-0.6pt, column sep=-0.6pt, matrix anchor=west]
+\tikzstyle{ehibucket} = [ampersand replacement=\&, row sep=-0.6pt, column sep=-0.6pt, matrix anchor=west, column 1/.style={anchor=west}]
 \tikzstyle{ehidepth} = [draw, semithick, fill=gray!40, minimum size=2em, font=\sffamily\bfseries]
 \tikzstyle{ehiptr} = [draw, semithick, minimum height=2em, minimum width=4em]
 \tikzstyle{ehival} = [draw, semithick, minimum size=2em, font=\ttfamily]
 \tikzstyle{ehibin} = [minimum height=2em, font=\ttfamily]
 \tikzstyle{ehilabel} = [minimum height=2em, font=\sffamily\bfseries, inner sep=0]
 \tikzstyle{ehilink} = [draw, semithick, ->, >=triangle 45, shorten >=.5em]
+
+% ------------------------------------------------------------------------------
 
 % helper macros (almost verbatim from weiwBTree.sty)
 \newcommand{\ehisuppressemptystr}[1]{% leave blank for entries in leaf nodes
@@ -43,7 +45,7 @@
   % Else
   {%
     #1%
-    \if@recordpointers
+    \if@ehirecordpointers
       \textsuperscript{*}
     \fi
   }%
@@ -58,7 +60,7 @@
 % ------------------------------------------------------------------------------
 
 % link between directory entry and bucket
-\newcommand{\exthashidxlink}[2]{% #1: src node; #2: dest node; 
+\newcommand{\exthashidxlink}[2]{% #1: src node; #2: dest node;
   \draw[ehilink] (#1.center) -- (#2-a.west);
 }
 
@@ -109,25 +111,25 @@
 
 % example
 %\begin{center}
-%    \scalebox{0.8}{
-%        \begin{tikzpicture}
-%            % directory
-%            \xyshift{+00mm}{+00mm}{\exthashidxdirectoryeight{directory}{3}}
-%            % buckets
-%            \xyshift{+20mm}{+60mm}{\exthashidxbucketfour{A}{3}{}{}{64}{16}}
-%            \xyshift{+20mm}{+30mm}{\exthashidxbucketfour{B}{2}{1}{5}{21}{}}
-%            \xyshift{+20mm}{+00mm}{\exthashidxbucketfour{C}{2}{10}{}{}{}}
-%            \xyshift{+20mm}{-30mm}{\exthashidxbucketfour{D}{2}{15}{7}{51}{}}
-%            \xyshift{+20mm}{-60mm}{\exthashidxbucketfour{A2}{3}{4}{12}{20}{36}{29}}
-%            % links
-%            \exthashidxlink{directory-000}{A}
-%            \exthashidxlink{directory-001}{B}
-%            \exthashidxlink{directory-010}{C}
-%            \exthashidxlink{directory-011}{D}
-%            \exthashidxlink{directory-100}{A2}
-%            \exthashidxlink{directory-101}{B}
-%            \exthashidxlink{directory-110}{C}
-%            \exthashidxlink{directory-111}{D}
-%        \end{tikzpicture}
-%    }
+%  \scalebox{0.8}{
+%    \begin{tikzpicture}
+%      % directory
+%      \xyshift{+00mm}{+00mm}{\exthashidxdirectoryeight{directory}{3}}
+%      % buckets
+%      \xyshift{+20mm}{+50mm}{\exthashidxbucketfour{A}{3}{}{}{64}{16}}
+%      \xyshift{+20mm}{+25mm}{\exthashidxbucketfour{B}{2}{1}{5}{21}{}}
+%      \xyshift{+20mm}{+00mm}{\exthashidxbucketfour{C}{2}{10}{}{}{}}
+%      \xyshift{+20mm}{-25mm}{\exthashidxbucketfour{D}{2}{15}{7}{51}{}}
+%      \xyshift{+20mm}{-50mm}{\exthashidxbucketfour{A2}{3}{4}{12}{20}{36}{29}}
+%      % links
+%      \exthashidxlink{directory-000}{A}
+%      \exthashidxlink{directory-001}{B}
+%      \exthashidxlink{directory-010}{C}
+%      \exthashidxlink{directory-011}{D}
+%      \exthashidxlink{directory-100}{A2}
+%      \exthashidxlink{directory-101}{B}
+%      \exthashidxlink{directory-110}{C}
+%      \exthashidxlink{directory-111}{D}
+%    \end{tikzpicture}
+%  }
 %\end{center}
