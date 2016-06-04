@@ -1,35 +1,74 @@
 \documentclass[12pt, a4paper]{article}
 
-%\usepackage[recordpointers]{exthashidx}
+%\usepackage[ehirecordpointers]{exthashidx}
 \usepackage{exthashidx}
+
+%\usepackage[lhirecordpointers]{linhashidx}
+\usepackage{linhashidx}
 
 \begin{document}
 
 \begin{figure}[!ht]
-    \begin{center}
-        \scalebox{0.8}{
-            \begin{tikzpicture}
-                % directory
-                \xyshift{+00mm}{+00mm}{\exthashidxdirectoryeight{directory}{3}}
-                % buckets
-                \xyshift{+20mm}{+60mm}{\exthashidxbucketfour{A}{3}{}{}{64}{16}}
-                \xyshift{+20mm}{+30mm}{\exthashidxbucketfour{B}{2}{1}{5}{21}{}}
-                \xyshift{+20mm}{+00mm}{\exthashidxbucketfour{C}{2}{10}{}{}{}}
-                \xyshift{+20mm}{-30mm}{\exthashidxbucketfour{D}{2}{15}{7}{51}{}}
-                \xyshift{+20mm}{-60mm}{\exthashidxbucketfour{A2}{3}{4}{12}{20}{36}{29}}
-                % links
-                \exthashidxlink{directory-000}{A}
-                \exthashidxlink{directory-001}{B}
-                \exthashidxlink{directory-010}{C}
-                \exthashidxlink{directory-011}{D}
-                \exthashidxlink{directory-100}{A2}
-                \exthashidxlink{directory-101}{B}
-                \exthashidxlink{directory-110}{C}
-                \exthashidxlink{directory-111}{D}
-            \end{tikzpicture}
+  \begin{center}
+    \scalebox{0.8}{
+      \begin{tikzpicture}
+        % directory
+        \xyshift{+00mm}{+00mm}{\exthashidxdirectoryeight{directory}{3}}
+        % buckets
+        \xyshift{+20mm}{+50mm}{\exthashidxbucketfour{A}{3}{}{}{64}{16}}
+        \xyshift{+20mm}{+25mm}{\exthashidxbucketfour{B}{2}{1}{5}{21}{}}
+        \xyshift{+20mm}{+00mm}{\exthashidxbucketfour{C}{2}{10}{}{}{}}
+        \xyshift{+20mm}{-25mm}{\exthashidxbucketfour{D}{2}{15}{7}{51}{}}
+        \xyshift{+20mm}{-50mm}{\exthashidxbucketfour{A2}{3}{4}{12}{20}{36}{29}}
+        % links
+        \exthashidxlink{directory-000}{A}
+        \exthashidxlink{directory-001}{B}
+        \exthashidxlink{directory-010}{C}
+        \exthashidxlink{directory-011}{D}
+        \exthashidxlink{directory-100}{A2}
+        \exthashidxlink{directory-101}{B}
+        \exthashidxlink{directory-110}{C}
+        \exthashidxlink{directory-111}{D}
+      \end{tikzpicture}
+    }
+  \end{center}
+  \caption{\textit{Extendible Hashing} Index}
+\end{figure}
+
+\begin{figure}[!ht]
+  \begin{center}
+    \scalebox{0.8}{
+      \begin{tikzpicture}
+        \linhashidxtwo{idx}{0}{
+          \linhashidxtwoentry{000}{00}{
+            \linhashidxbucketfour{b1}{32}{8}{24}{}
+            \linhashidxnullptr{b1}
+          }
+          \linhashidxtwoentry{001}{01}{
+            \linhashidxbucketfour{b2}{9}{25}{41}{17}
+            \linhashidxnullptr{b2}
+            \linhashidxnext{b2}
+          }
+          \linhashidxtwoentry{010}{10}{
+            \linhashidxbucketfour{b3}{14}{18}{10}{30}
+            %\linhashidxnullptr{b3}
+            \xyshift{11.5em}{0em}{\linhashidxbucketfour{o3}{42}{}{}{}}
+            \linhashidxlink{b3}{o3}
+            \linhashidxnullptr{o3}
+          }
+          \linhashidxtwoentry{011}{11}{
+            \linhashidxbucketfour{b4}{31}{35}{7}{11}
+            \linhashidxnullptr{b4}
+          }
+          \linhashidxtwoentry{100}{00}{
+            \linhashidxbucketfour{b5}{44}{36}{}{}
+            \linhashidxnullptr{b5}
+          }
         }
-    \end{center}
-    \caption{\textit{Extendible Hashing} Index}
+      \end{tikzpicture}
+    }
+  \end{center}
+  \caption{\textit{Linear Hashing} Index}
 \end{figure}
 
 \end{document}
