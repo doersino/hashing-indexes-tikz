@@ -1,0 +1,163 @@
+% Simple package for drawing Linear Hashing Indexes using TikZ. See
+% https://github.com/doersino/hashing-indexes-tikz for updates and a comparable
+% package for Extendible Hashing Indexes.
+% Layout based on visualizations used in slide set "Hash-Based Indexing" from
+% http://db.inf.uni-tuebingen.de/teaching/DatenbanksystemeIISS2016.html.
+% Based on weiwBTree.sty from http://www.cse.unsw.edu.au/~weiw/tools.html.
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{linhashidx}
+
+\newif\if@lhirecordpointers\@lhirecordpointersfalse
+\DeclareOption{lhirecordpointers}{
+  \@lhirecordpointerstrue
+}
+
+\ExecuteOptions{}
+\ProcessOptions\relax
+
+\RequirePackage{tikz}
+\RequirePackage{ifthen}
+\RequirePackage{fixltx2e}
+
+\usetikzlibrary{arrows,shapes,matrix,fit}
+
+% ------------------------------------------------------------------------------
+
+% global style declarations
+\tikzstyle{lhifmatrix} = [ampersand replacement=\&]
+\tikzstyle{lhifbin} = [minimum height=4em, minimum width=4em, font=\ttfamily]
+\tikzstyle{lhiflevel} = [minimum height=4em, minimum width=4em, font=\sffamily\bfseries]
+\tikzstyle{lhifh} = [minimum height=2em, minimum width=4em, font=\sffamily\bfseries]
+\tikzstyle{lhifln} = [semithick]
+\tikzstyle{lhifdashln} = [semithick, dashed]
+\tikzstyle{lhifprimpages} = [minimum height=3em, minimum width=12em, xshift=2.25em, font=\sffamily\bfseries]
+\tikzstyle{lhibucket} = [ampersand replacement=\&, row sep=-0.6pt, column sep=-0.6pt, matrix anchor=west, inner sep=0]
+\tikzstyle{lhival} = [draw, semithick, minimum size=2em, node distance=2em, font=\ttfamily]
+\tikzstyle{lhilink} = [draw, semithick, ->, >=triangle 45, shorten >=.15em]
+\tikzstyle{lhinext} = [draw, semithick, ->, >=triangle 45, shorten >=1em]
+\tikzstyle{lhinextlabel} = [font=\sffamily\bfseries, anchor=west]
+
+% ------------------------------------------------------------------------------
+
+% helper macros (almost verbatim from weiwBTree.sty)
+\newcommand{\lhisuppressemptystr}[1]{% leave blank for entries in leaf nodes
+  \ifthenelse{\equal{#1}{}}%
+  {%
+    \relax%
+  }%
+  % Else
+  {%
+    #1%
+    \if@lhirecordpointers
+      \textsuperscript{*}
+    \fi
+  }%
+}%
+
+\providecommand{\xyshift}[3]{% help to place the nodes
+  \begin{scope}[xshift=#1, yshift=#2]
+    #3
+  \end{scope}%
+}
+
+% ------------------------------------------------------------------------------
+
+% next=1 pointer
+% #1: bucket
+\newcommand{\linhashidxnext}[1]{
+	\draw[lhinext] ([xshift=3em] #1.east) -- (#1.east) node [lhinextlabel, pos=0] {next=1};
+}
+
+% null pointer
+% #1: bucket
+\newcommand{\linhashidxnullptr}[1]{
+  \draw[lhifln] ([xshift=-0.3pt] #1-d.south east) -- ([yshift=-1em,xshift=-0.3pt] #1-d.south east);
+  \draw[lhifln] ([yshift=-1em,xshift=-.5em] #1-d.south east) -- ([yshift=-1em,xshift=.5em] #1-d.south east);
+}
+
+% link between bucket and overflow bucket
+% #1: bucket
+% #2: overflow bucket
+\newcommand{\linhashidxlink}[2]{
+  \draw[lhilink] (#1.east) -- (#2.west);
+}
+
+% bucket with capacity = 4
+% #1: identifier
+% #2-#5: values
+\newcommand{\linhashidxbucketfour}[5]{
+  \node[lhival] (#1-a) {\lhisuppressemptystr{#2}};
+  \node[lhival, right of=#1-a] (#1-b) {\lhisuppressemptystr{#3}};
+  \node[lhival, right of=#1-b] (#1-c) {\lhisuppressemptystr{#4}};
+  \node[lhival, right of=#1-c] (#1-d) {\lhisuppressemptystr{#5}};
+  \node[fit=(#1-a)(#1-b)(#1-c)(#1-d), inner sep=0](#1){};
+}
+
+% linear hashing index with two hash functions
+% #1: identifier
+% #2: level
+% #3: entries
+\newcommand{\linhashidxtwo}[3]{
+
+  % print matrix with entries from #3
+  \matrix[lhifmatrix] (#1)
+  {
+    \node[lhiflevel] (#1-level1) {}; \& \node[lhiflevel] (#1-level2) {}; \\
+    \node[lhifh] (#1-h1) {h\textsubscript{1}}; \& \node[lhifh] (#1-h0) {h\textsubscript{0}}; \\
+    #3
+    \& \node[lhifh] (#1-bottom) {\relax}; \& \node[lhifprimpages] (#1-primpages) {primary pages}; \\
+  };
+
+  % add level = #2 header
+  \node[lhiflevel,fit=(#1-level1)(#1-level2)] (#1-level) {level = #2};
+
+  % draw vertical lines
+  \draw[lhifln] (#1-h0.north west) -- (#1-bottom.north west);
+  \draw[lhifdashln] (#1-h0.north east) -- (#1-bottom.south east);
+}
+
+% linear hashing index entry
+% #1: h_1 value
+% #2: h_0 value
+% #3: buckets
+\newcommand{\linhashidxtwoentry}[3]{
+	\node[lhifbin] (#1-#1) {#1}; \& \node[lhifbin] (#1-#2) {#2}; \& #3 \\
+}
+
+% ------------------------------------------------------------------------------
+
+% example
+%\begin{center}
+%  \scalebox{0.8}{
+%    \begin{tikzpicture}
+%      \linhashidxtwo{idx}{0}{
+%        \linhashidxtwoentry{000}{00}{
+%          \linhashidxbucketfour{b1}{32}{8}{24}{}
+%          \linhashidxnullptr{b1}
+%        }
+%        \linhashidxtwoentry{001}{01}{
+%          \linhashidxbucketfour{b2}{9}{25}{41}{17}
+%          \linhashidxnullptr{b2}
+%          \linhashidxnext{b2}
+%        }
+%        \linhashidxtwoentry{010}{10}{
+%          \linhashidxbucketfour{b3}{14}{18}{10}{30}
+%          %\linhashidxnullptr{b3}
+%          \xyshift{11.5em}{0em}{\linhashidxbucketfour{o3}{42}{}{}{}}
+%          \linhashidxlink{b3}{o3}
+%          \linhashidxnullptr{o3}
+%        }
+%        \linhashidxtwoentry{011}{11}{
+%          \linhashidxbucketfour{b4}{31}{35}{7}{11}
+%          \linhashidxnullptr{b4}
+%        }
+%        \linhashidxtwoentry{100}{00}{
+%          \linhashidxbucketfour{b5}{44}{36}{}{}
+%          \linhashidxnullptr{b5}
+%        }
+%      }
+%    \end{tikzpicture}
+%  }
+%\end{center}
