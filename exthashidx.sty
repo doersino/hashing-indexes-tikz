@@ -94,6 +94,31 @@
   };
 }
 
+% directory with capacity = 16
+\newcommand{\exthashidxdirectorysixteen}[2]{%
+  \matrix[ehidirectory] (#1)
+  {
+    \& \node[ehidepth] (#1-depth) {#2}; \\
+    \node[ehibin] {0000 \hspace*{1em}}; \& \node[ehiptr] (#1-0000) {\relax}; \\
+    \node[ehibin] {0001 \hspace*{1em}}; \& \node[ehiptr] (#1-0001) {\relax}; \\
+    \node[ehibin] {0010 \hspace*{1em}}; \& \node[ehiptr] (#1-0010) {\relax}; \\
+    \node[ehibin] {0011 \hspace*{1em}}; \& \node[ehiptr] (#1-0011) {\relax}; \\
+    \node[ehibin] {0100 \hspace*{1em}}; \& \node[ehiptr] (#1-0100) {\relax}; \\
+    \node[ehibin] {0101 \hspace*{1em}}; \& \node[ehiptr] (#1-0101) {\relax}; \\
+    \node[ehibin] {0110 \hspace*{1em}}; \& \node[ehiptr] (#1-0110) {\relax}; \\
+    \node[ehibin] {0111 \hspace*{1em}}; \& \node[ehiptr] (#1-0111) {\relax}; \\
+    \node[ehibin] {1000 \hspace*{1em}}; \& \node[ehiptr] (#1-1000) {\relax}; \\
+    \node[ehibin] {1001 \hspace*{1em}}; \& \node[ehiptr] (#1-1001) {\relax}; \\
+    \node[ehibin] {1010 \hspace*{1em}}; \& \node[ehiptr] (#1-1010) {\relax}; \\
+    \node[ehibin] {1011 \hspace*{1em}}; \& \node[ehiptr] (#1-1011) {\relax}; \\
+    \node[ehibin] {1100 \hspace*{1em}}; \& \node[ehiptr] (#1-1100) {\relax}; \\
+    \node[ehibin] {1101 \hspace*{1em}}; \& \node[ehiptr] (#1-1101) {\relax}; \\
+    \node[ehibin] {1110 \hspace*{1em}}; \& \node[ehiptr] (#1-1110) {\relax}; \\
+    \node[ehibin] {1111 \hspace*{1em}}; \& \node[ehiptr] (#1-1111) {\relax}; \\
+    \& \node[ehilabel] (#1-label) {#1}; \\
+  };
+}
+
 % bucket with capacity = 4
 \newcommand{\exthashidxbucketfour}[6]{%
   \matrix[ehibucket] (#1)
