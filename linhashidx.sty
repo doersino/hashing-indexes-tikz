@@ -64,10 +64,11 @@
 
 % ------------------------------------------------------------------------------
 
-% next=1 pointer
+% next pointer
 % #1: bucket
-\newcommand{\linhashidxnext}[1]{
-	\draw[lhinext] ([xshift=3em] #1.east) -- (#1.east) node [lhinextlabel, pos=0] {next=1};
+% #2: bucket number
+\newcommand{\linhashidxnext}[2]{
+  \draw[lhinext] ([xshift=3em] #1.east) -- (#1.east) node [lhinextlabel, pos=0] {next=#2};
 }
 
 % null pointer
