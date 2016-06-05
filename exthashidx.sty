@@ -60,12 +60,16 @@
 % ------------------------------------------------------------------------------
 
 % link between directory entry and bucket
-\newcommand{\exthashidxlink}[2]{% #1: src node; #2: dest node;
+% #1: directory entry
+% #2: bucket
+\newcommand{\exthashidxlink}[2]{
   \draw[ehilink] (#1.center) -- (#2-a.west);
 }
 
 % directory with capacity = 4
-\newcommand{\exthashidxdirectoryfour}[2]{%
+% #1: identifier
+% #2: depth
+\newcommand{\exthashidxdirectoryfour}[2]{
   \matrix[ehidirectory] (#1)
   {
     \& \node[ehidepth] (#1-depth) {#2}; \\
@@ -78,7 +82,9 @@
 }
 
 % directory with capacity = 8
-\newcommand{\exthashidxdirectoryeight}[2]{%
+% #1: identifier
+% #2: depth
+\newcommand{\exthashidxdirectoryeight}[2]{
   \matrix[ehidirectory] (#1)
   {
     \& \node[ehidepth] (#1-depth) {#2}; \\
@@ -95,7 +101,9 @@
 }
 
 % directory with capacity = 16
-\newcommand{\exthashidxdirectorysixteen}[2]{%
+% #1: identifier
+% #2: depth
+\newcommand{\exthashidxdirectorysixteen}[2]{
   \matrix[ehidirectory] (#1)
   {
     \& \node[ehidepth] (#1-depth) {#2}; \\
@@ -120,7 +128,10 @@
 }
 
 % bucket with capacity = 4
-\newcommand{\exthashidxbucketfour}[6]{%
+% #1: identifier
+% #2: depth
+% #3-#6: values
+\newcommand{\exthashidxbucketfour}[6]{
   \matrix[ehibucket] (#1)
   {
   	\node[ehidepth] (#1-depth) {#2}; \\
