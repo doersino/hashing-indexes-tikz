@@ -127,6 +127,48 @@
   };
 }
 
+% bucket with capacity = 1
+% #1: identifier
+% #2: depth
+% #3: value
+\newcommand{\exthashidxbucketone}[4]{
+	\matrix[ehibucket] (#1)
+	{
+		\node[ehidepth] (#1-depth) {#2}; \\
+		\node[ehival] (#1-a) {\ehisuppressemptystr{#3}}; \&
+		\node[ehilabel] (#1-label) {\hspace*{1em} bucket #1};\\
+	};
+}
+
+% bucket with capacity = 2
+% #1: identifier
+% #2: depth
+% #3-#4: values
+\newcommand{\exthashidxbuckettwo}[4]{
+	\matrix[ehibucket] (#1)
+	{
+		\node[ehidepth] (#1-depth) {#2}; \\
+		\node[ehival] (#1-a) {\ehisuppressemptystr{#3}}; \&
+		\node[ehival] (#1-b) {\ehisuppressemptystr{#4}}; \&
+		\node[ehilabel] (#1-label) {\hspace*{1em} bucket #1};\\
+	};
+}
+
+% bucket with capacity = 3
+% #1: identifier
+% #2: depth
+% #3-#5: values
+\newcommand{\exthashidxbucketthree}[5]{
+	\matrix[ehibucket] (#1)
+	{
+		\node[ehidepth] (#1-depth) {#2}; \\
+		\node[ehival] (#1-a) {\ehisuppressemptystr{#3}}; \&
+		\node[ehival] (#1-b) {\ehisuppressemptystr{#4}}; \&
+		\node[ehival] (#1-c) {\ehisuppressemptystr{#5}}; \&
+		\node[ehilabel] (#1-label) {\hspace*{1em} bucket #1};\\
+	};
+}
+
 % bucket with capacity = 4
 % #1: identifier
 % #2: depth
@@ -142,6 +184,9 @@
     \node[ehilabel] (#1-label) {\hspace*{1em} bucket #1};\\
   };
 }
+
+
+
 
 % ------------------------------------------------------------------------------
 
