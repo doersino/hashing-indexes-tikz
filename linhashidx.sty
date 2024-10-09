@@ -71,11 +71,32 @@
   \draw[lhinext] ([xshift=3em] #1.east) -- (#1.east) node [lhinextlabel, pos=0] {next=#2};
 }
 
-% null pointer
+% null pointer for bucket with capacity = 1
 % #1: bucket
-\newcommand{\linhashidxnullptr}[1]{
-  \draw[lhifln] ([xshift=-0.3pt] #1-d.south east) -- ([yshift=-1em,xshift=-0.3pt] #1-d.south east);
-  \draw[lhifln] ([yshift=-1em,xshift=-.5em] #1-d.south east) -- ([yshift=-1em,xshift=.5em] #1-d.south east);
+\newcommand{\linhashidxnullptrone}[1]{
+	\draw[lhifln] ([xshift=-0.3pt] #1-a.south east) -- ([yshift=-1em,xshift=-0.3pt] #1-a.south east);
+	\draw[lhifln] ([yshift=-1em,xshift=-.5em] #1-a.south east) -- ([yshift=-1em,xshift=.5em] #1-a.south east);
+}
+
+% null pointer for bucket with capacity = 2
+% #1: bucket
+\newcommand{\linhashidxnullptrtwo}[1]{
+	\draw[lhifln] ([xshift=-0.3pt] #1-b.south east) -- ([yshift=-1em,xshift=-0.3pt] #1-b.south east);
+	\draw[lhifln] ([yshift=-1em,xshift=-.5em] #1-b.south east) -- ([yshift=-1em,xshift=.5em] #1-b.south east);
+}
+
+% null pointer for bucket with capacity = 3
+% #1: bucket
+\newcommand{\linhashidxnullptrthree}[1]{
+  \draw[lhifln] ([xshift=-0.3pt] #1-c.south east) -- ([yshift=-1em,xshift=-0.3pt] #1-c.south east);
+  \draw[lhifln] ([yshift=-1em,xshift=-.5em] #1-c.south east) -- ([yshift=-1em,xshift=.5em] #1-c.south east);
+}
+
+% null pointer for bucket with capacity = 4
+% #1: bucket
+\newcommand{\linhashidxnullptrfour}[1]{
+	\draw[lhifln] ([xshift=-0.3pt] #1-d.south east) -- ([yshift=-1em,xshift=-0.3pt] #1-d.south east);
+	\draw[lhifln] ([yshift=-1em,xshift=-.5em] #1-d.south east) -- ([yshift=-1em,xshift=.5em] #1-d.south east);
 }
 
 % link between bucket and overflow bucket
@@ -83,6 +104,33 @@
 % #2: overflow bucket
 \newcommand{\linhashidxlink}[2]{
   \draw[lhilink] (#1.east) -- (#2.west);
+}
+
+% bucket with capacity = 1
+% #1: identifier
+% #2: value
+\newcommand{\linhashidxbucketone}[2]{
+	\node[lhival] (#1-a) {\lhisuppressemptystr{#2}};
+	\node[fit=(#1-a), inner sep=0](#1){};
+}
+
+% bucket with capacity = 2
+% #1: identifier
+% #2-#3: values
+\newcommand{\linhashidxbuckettwo}[3]{
+	\node[lhival] (#1-a) {\lhisuppressemptystr{#2}};
+	\node[lhival, right of=#1-a] (#1-b) {\lhisuppressemptystr{#3}};
+	\node[fit=(#1-a)(#1-b), inner sep=0](#1){};
+}
+
+% bucket with capacity = 3
+% #1: identifier
+% #2-#4: values
+\newcommand{\linhashidxbucketthree}[4]{
+	\node[lhival] (#1-a) {\lhisuppressemptystr{#2}};
+	\node[lhival, right of=#1-a] (#1-b) {\lhisuppressemptystr{#3}};
+	\node[lhival, right of=#1-b] (#1-c) {\lhisuppressemptystr{#4}};
+	\node[fit=(#1-a)(#1-b)(#1-c), inner sep=0](#1){};
 }
 
 % bucket with capacity = 4
@@ -95,6 +143,7 @@
   \node[lhival, right of=#1-c] (#1-d) {\lhisuppressemptystr{#5}};
   \node[fit=(#1-a)(#1-b)(#1-c)(#1-d), inner sep=0](#1){};
 }
+
 
 % linear hashing index with two hash functions
 % #1: identifier
@@ -136,27 +185,27 @@
 %      \linhashidxtwo{idx}{0}{
 %        \linhashidxtwoentry{000}{00}{
 %          \linhashidxbucketfour{b1}{32}{8}{24}{}
-%          \linhashidxnullptr{b1}
+%          \linhashidxnullptrfour{b1}
 %        }
 %        \linhashidxtwoentry{001}{01}{
 %          \linhashidxbucketfour{b2}{9}{25}{41}{17}
-%          \linhashidxnullptr{b2}
+%          \linhashidxnullptrfour{b2}
 %          \linhashidxnext{b2}{1}
 %        }
 %        \linhashidxtwoentry{010}{10}{
 %          \linhashidxbucketfour{b3}{14}{18}{10}{30}
-%          %\linhashidxnullptr{b3}
+%          %\linhashidxnullptrfour{b3}
 %          \xyshift{11.5em}{0em}{\linhashidxbucketfour{o3}{42}{}{}{}}
 %          \linhashidxlink{b3}{o3}
-%          \linhashidxnullptr{o3}
+%          \linhashidxnullptrfour{o3}
 %        }
 %        \linhashidxtwoentry{011}{11}{
 %          \linhashidxbucketfour{b4}{31}{35}{7}{11}
-%          \linhashidxnullptr{b4}
+%          \linhashidxnullptrfour{b4}
 %        }
 %        \linhashidxtwoentry{100}{00}{
 %          \linhashidxbucketfour{b5}{44}{36}{}{}
-%          \linhashidxnullptr{b5}
+%          \linhashidxnullptrfour{b5}
 %        }
 %      }
 %    \end{tikzpicture}
